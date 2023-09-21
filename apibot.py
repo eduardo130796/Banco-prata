@@ -45,7 +45,7 @@ def apibot():
                     telefone = telefone[3:]
                     #validação do CPF
                     validar_cpf(telefone,nome,cpf)
-                    obter_cpf_outra_pagina(nome,cpf,telefone)
+                    banco_prata(nome,cpf,telefone)
 
         print('finalizado')
 
