@@ -125,7 +125,7 @@ def banco_prata(nome,cpf,telefone):
         usuario = "vandeir.professor@gmail.com"
         senha = "228KCX>YDc3Mn.KJ"
         chrome_options = webdriver.ChromeOptions()
-        #options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
         servico = Service(ChromeDriverManager().install())
         navegador = webdriver.Chrome(service=servico, options=chrome_options)
         navegador.get('https://admin-cb.pratadigital.com.br')
