@@ -77,7 +77,7 @@ class Whatsapp:
         Whatsapp.add_etiqueta(id,'4640702')
         Whatsapp.delete_etiqueta(id, '4613936')
 
-    def cpf_errdo(tel):
+    def cpf_errado(tel):
         id = Whatsapp.get_subscriber_id(tel)
         Whatsapp.delete_etiqueta(id, '4613936')
     
