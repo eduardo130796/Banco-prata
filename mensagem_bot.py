@@ -76,6 +76,10 @@ class Whatsapp:
         #usa o valor para envio da mensagem
         Whatsapp.add_etiqueta(id,'4640702')
         Whatsapp.delete_etiqueta(id, '4613936')
+
+    def cpf_errdo(tel):
+        id = Whatsapp.get_subscriber_id(tel)
+        Whatsapp.delete_etiqueta(id, '4613936')
     
 #Whatsapp.whats_negado('6193526884', 'Eduardo', 'não_autorizado','30,00')
 #banco_prata('Eduardo', '03015468197','6193526884')
