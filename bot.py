@@ -20,7 +20,7 @@ def get_subscribers(page, headers):
 
 def process_subscriber(subscriber):
     tags = subscriber['tags']
-    if 'ura' in tags:
+    if ('simulacao_prata' in tags ) or ('cadastrado_prata' in tags):
         nome = subscriber['full_name']
         telefone = subscriber['phone'][3:]
         cpf = subscriber['variables']['CPF']

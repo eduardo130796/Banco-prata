@@ -22,7 +22,7 @@ def consultar_cpf(navegador, nome,cpf,tel):
                 cpf_element = row.find_element(By.XPATH, f'//*[@id="content"]/div[2]/div/div/table/tbody/tr[{index}]/td[1]/span')
                 cpf_numerico = ''.join(filter(str.isdigit, cpf_element.text))
                 cpf = ''.join(filter(str.isdigit, cpf))
-                print(cpf_numerico)
+                #print(cpf_numerico)
                 # Localizar o elemento de status na mesma linha
                 status_element = row.find_element(By.XPATH, f'//*[@id="content"]/div[2]/div/div/table/tbody/tr[{index}]/td[3]/span')
                 # Verificar se o texto do status é "FALHA NA CONSULTA" ou "CONSULTA CONCLUÍDA" e se o CPF corresponde
@@ -48,7 +48,7 @@ def consultar_cpf(navegador, nome,cpf,tel):
                                 if resultado == 'Ainda não recebemos o retorno da CEF, por gentileza aguarde mais um pouco.':
                                         erro = 'aguardando'
                                         print('aguardando')
-                                        Whatsapp.whats_negado(tel, nome, erro,'')
+                                        #Whatsapp.whats_negado(tel)
                                         return True
                                 elif (resultado.split("."))[0] == 'Cliente sem saldo mínimo para antecipação (R$ 75,00)':
                                         erro = 'sem_saldo'
@@ -56,19 +56,19 @@ def consultar_cpf(navegador, nome,cpf,tel):
                                         saldo_baixo = saldo.split(":")[1].strip()
                                         print(saldo_baixo)
                                         print('semsaldo')
-                                        Whatsapp.whats_negado(tel, nome, erro,saldo_baixo)
+                                        Whatsapp.whats_negado(tel)
                                         return True
                                 elif resultado == 'Instituição Fiduciária não possui autorização do Trabalhador para Operação Fiduciária.':
                                         erro = 'não_autorizado'
                                         print('não_autorizado')
-                                        Whatsapp.whats_negado(tel, nome, erro,'')
+                                        Whatsapp.whats_negado(tel)
                                         return True
                                 elif resultado == 'Ação não permitida até o próximo mês.':
                                         erro = 'aniversario'
                                         print('aniversario')
-                                        Whatsapp.whats_negado(tel, nome, erro,'')
+                                        #Whatsapp.whats_negado(tel, nome, erro,'')
                                         return True
-                                Whatsapp.whats_negado(tel, nome, 'erro','sem')
+                                Whatsapp.whats_negado(tel)
                                 print(resultado)
                         return True  # CPF já foi consultado
         return False  # CPF não foi consultado

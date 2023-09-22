@@ -29,6 +29,11 @@ class Whatsapp:
         json_data = {'flow': fluxo}
         response = requests.post(f'{Whatsapp.BASE_URL}/{id}/send_flow/', headers=Whatsapp.HEADERS, json=json_data)
 
+    #adiciona etiqueta
+    def add_etiqueta(id, etiqueta):
+        json_data = {}
+        response = requests.post(f'{Whatsapp.BASE_URL}/{id}/tags/{etiqueta}/', headers=Whatsapp.HEADERS, json=json_data)
+
     #envia a mensagem
     @staticmethod
     def send_message(id, texto, fluxo=None, etiqueta=None):
@@ -36,7 +41,6 @@ class Whatsapp:
             'type': 'text',
             'value': f'{texto}',
         }
-
         response = requests.post(f'{Whatsapp.BASE_URL}/{id}/send_message/', headers=Whatsapp.HEADERS, json=json_data)
         time.sleep(3)
 
@@ -59,57 +63,18 @@ class Whatsapp:
     def whats_saldo_liberado(tel, nome,valor):
         id = Whatsapp.get_subscriber_id(tel)
         #usa o valor para envio da mensagem
-        texto = mensagens.mensagem_1(nome,valor)
-        Whatsapp.send_message(id, texto,None,'4640428')
-        Whatsapp.send_flow(id,'2329013')
-        Whatsapp.delete_etiqueta(id, '4613936')
+        Whatsapp.add_etiqueta(id,'4640428')
+        Whatsapp.send_custom_field(id,valor,'1239332')
+        Whatsapp.delete_etiqueta(id, '4640702')
 
-
-    def whats_negado(tel, nome, erro, valor):
+    def whats_negado(tel):
         id = Whatsapp.get_subscriber_id(tel)
-        texto, fluxo, etiqueta = Whatsapp.get_negado_texto_fluxo(erro, nome, valor)
-        Whatsapp.send_message(id, texto, fluxo, etiqueta)
-        Whatsapp.delete_etiqueta(id, '4613936')
-    
-    @staticmethod
-    def get_negado_texto_fluxo(erro, nome, valor):
-        erros = {
-            'aguardando': ('mensagem_4', '2329013', '4634297'),
-            'sem_saldo': ('mensagem_3', None, None),
-            'não_autorizado': ('mensagem_2', '2329013', '4634298'),
-            'aniversario':('mensagem_6', None, None)
-        }
-        mensagem, fluxo, etiqueta = erros.get(erro, ('mensagem_erro_padrao', None, None))
-        texto = getattr(mensagens, mensagem)(nome,valor)
-        return texto, fluxo, etiqueta
-    
-    @staticmethod
-    def whats_erro_dados(tel, nome_1, valor, aviso):
-        id = Whatsapp.get_subscriber_id(tel)
-        texto, fluxo, etiqueta = Whatsapp.get_erro_dados_texto_fluxo_etiqueta(aviso, nome_1, valor)
-        Whatsapp.send_message(id, texto, fluxo, etiqueta)
-
-        Whatsapp.delete_etiqueta(id, '4613936')
-    
-    #lista os erros possiveis na parte de validação
-    @staticmethod
-    def get_erro_dados_texto_fluxo_etiqueta(aviso, nome_1, valor):
-        erros = {
-            'erro_cpf': ('mensagem_5', '2329013', '2006982'),
-            'erro_dn': ('mensagem_6', '1085959', '2007064'),
-            'erro_cep': ('mensagem_7', '1085959', '2007403'),
-            'erro_nome': ('mensagem_9', '1085959', '4097369'),
-            
-        }
-        mensagem, fluxo, etiqueta = erros.get(aviso, ('mensagem_erro_padrao', None, None))
-        texto = getattr(mensagens, mensagem)(nome_1, valor)
-        return texto, fluxo, etiqueta
+        Whatsapp.delete_etiqueta(id, '4640702')
     
     def cadastrado(tel, nome):
         id = Whatsapp.get_subscriber_id(tel)
         #usa o valor para envio da mensagem
-        texto = mensagens.mensagem_7(nome)
-        Whatsapp.send_message(id, texto, '2329013','4640702')
+        Whatsapp.add_etiqueta(id,'4640702')
         Whatsapp.delete_etiqueta(id, '4613936')
     
 #Whatsapp.whats_negado('6193526884', 'Eduardo', 'não_autorizado','30,00')
